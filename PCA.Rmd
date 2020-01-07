@@ -269,8 +269,6 @@ Let's change the default colours. Red and green are difficult for many people wi
 ```{r nicer plot colours}
 colour = ifelse(iris$Species=="setosa", "black", ifelse(iris$Species=="versicolor","orange", "purple"))
 plot(iris.pca$x[,1],iris.pca$x[,2],pch=19,xlab="PC1",ylab="PC2",asp=1, col=colour)
-arrows(x0=c(0,0,0,0),y0=c(0,0,0,0),x1=iris.pca$rotation[,1]*3,y1=iris.pca$rotation[,2]*3)
-text(x=iris.pca$rotation[,1]*3,y=iris.pca$rotation[,2]*3,colnames(iris[,1:4]))
 legend("topright",legend = unique(iris$Species), col=unique(colour), pch=19)
 ```
 

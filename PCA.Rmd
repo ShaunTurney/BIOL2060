@@ -301,13 +301,13 @@ text(x=iris.pca$rotation[,1]*3,y=iris.pca$rotation[,2]*3,colnames(iris[,1:4]))
 legend("topright",legend = unique(iris$Species), col=unique(colour), pch=19)
 ```
 
-**Test your understanding:** Why are the Petal.Length and Petal.Width arrows so similar? Why is the Sepal.Length arrow pointing in a different direction from the other arrows? 
+**Test your understanding:** Why are the Petal.Length and Petal.Width arrows so similar? Why is the Sepal.Width arrow pointing in a different direction from the other arrows? 
 
 <details>
   <summary>Click for Answer</summary>
   Petal.Length and Petal.Width have similar arrows because the PCA has oriented them almost the same relative to the PCA axes. This is because being able to see both variables at the same time doesn't add much extra information. In other words, Petal.Length and Petal.Width provide redundant information because their covariance is high. If you scroll up to the "Iris case study" section, you can see the strong correlation in the Petal.Length-Petal.Width scatterplots.
   
-  Similarly, Sepal.Length is pointing perpendicularly to the other arrows because it isn't correlated strongly with the other variables. Notice also that the Sepal.Length arrow is longer than the other variables. This means that Sepal.Length explains a lot of the variance in the data and so it contributes strongly to the principal components (especially PC2). To think of it more visually, the data is spread out widely and in a unique way on the Sepal.Length axis so the PCA orients this axis so that we can see the spread. 
+  Similarly, Sepal.Width is pointing perpendicularly to the other arrows because it isn't correlated strongly with the other variables. Notice also that the Sepal.Width arrow is longer than the other variables. This means that Sepal.Length explains a lot of the variance in the data and so it contributes strongly to the principal components (especially PC2). To think of it more visually, the data is spread out widely and in a unique way on the Sepal.Length axis so the PCA orients this axis so that we can see the spread. 
   
   If two variables were negatively correlated, then their arrows would point in opposite directions on the biplot.
   

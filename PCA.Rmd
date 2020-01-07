@@ -27,17 +27,18 @@ knitr::knit_hooks$set(webgl = hook_webgl)
 
 ## Introduction
 
-As biologists, we often find ourselves with many measurements of the same things. These "things" might be plants or people or study sites or blood samples or any other type of thing you might study. We refer to each measurement as a "dimension". While it's great to have so much information about the things you're studying, having a large number of dimensions poses challenges for statistical analysis. One challenge is that some of the measurements will likely be strongly correlated with each other because they're measuring related properties. Correlated variables provide redundant information and, furthermore, violate the assumptions of models you may wish to use (e.g., multiple regression). Another challenge is that the variables can't be visualized together to observe patterns because the number of dimensions that can be displayed on one graph is limited. For these reasons and more, it can be difficult to identify patterns in data with many dimensions. 
+As biologists, we often find ourselves with many measurements of the same things. These "things" might be plants or people or study sites or blood samples or anything else you might study. We refer to each measurement as a "dimension". While it's great to have so much information about the things you're studying, having a large number of dimensions poses challenges for statistical analysis. One challenge is that some of the measurements will likely be strongly correlated with each other because they're measuring related properties. Correlated variables provide redundant information and violate the assumptions of some models (e.g., multiple regression). Another challenge is that number of dimensions that can be displayed on one graph is limited, so it can be difficult to visualize all the variables together. 
 
-Principal Component Analysis (PCA) is a powerful tool for finding patterns in data with many dimensions. PCA allows you to describe your data with new variables (called principal components) that better express the similarities and differences between the things you're measuring. From there, one possibility is to choose just a few of these new variables and discard the rest. This allows you to reduce the number of dimensions in your data without losing much information.   
+Principal Component Analysis (PCA) is a powerful tool for finding patterns in data with many dimensions. PCA allows you to describe your data with new variables (called principal components) that better express the similarities and differences between the things you're measuring. A common use of PCA is to choose just a few of these new variables and discard the rest. This allows you to reduce the number of dimensions in your data without losing much information.   
 
-This tutorial has two sections: Introduction and Assignment. In the Introduction section, I introduce the method of PCA using a case study of iris flowers. You don't need to hand anything in from the Introduction. In the Assignment section, I give instructions for your assignment, which has two parts. In the first part, you will answer comprehension questions about a PCA published in a peer-reviewed study. In the second part, you and your colleagues will collect data about yourselves and then you will analyze this data using a PCA.
+This tutorial has two sections: Introduction and Assignment. In the Introduction section, I introduce the method of PCA using a case study of iris flowers. In the Assignment section, I give instructions for your assignment. Your assignment will give you the opportunity to interpret a PCA reported by other researchers and to perform and report your own PCA. 
 
 ***Learning objectives: *** By the end of this tutorial, you will be able to:
 
 * Describe the principles, relating to variance and rotations, that underly principal component analysis.
 * Interpret principal component analyses reported by other researchers.
 * Perform principal component analysis using R, including visualizing and interpreting results.
+
 
 ### Iris case study 
 
@@ -47,26 +48,35 @@ In 1936, statistician Ronald Fisher published a paper with iris flower morpholog
 <br>
 *Photo of *Iris versicolor *flower. Image source: https://en.wikipedia.org/wiki/Iris_flower_data_set#/media/File:Iris_versicolor_3.jpg*
 
-We can take a look at the first few rows of the *iris* dataset by using the *head* function in R. The measurements are given in centimeters. 
+We can look at the first few rows of the *iris* dataset by using the *head* function in R. The measurements are given in centimeters. 
 
 ```{r iris}
 head(iris)
 ```
 
-We can use the *summary* and *plot* functions to further inspect the data.
+The *summary* and *plot* functions allow us to further inspect the data.
 
 ```{r iris2}
 summary(iris)
 plot(iris[,1:4]) 
 ```
 
-The *iris* dataset is a good candidate for PCA because it has multiple variables (dimensions) and the variables are correlated with each other. In the following subsections, we will use PCA to identify patterns in flower morphology.  
+The *iris* dataset is a good candidate for PCA because it has multiple dimensions and the variables are correlated with each other. In the following subsections, we will use PCA to identify patterns in flower morphology.  
+
 
 ### Understanding PCA visually
 
 PCA can be understood as a rotation of the data. The data is rotated in such a way that it varies as much as possible on the horizonal axis. The horizontal axis is the first principal component (PC1), and the vertical axis is the second principal component (PC2). 
 
-Try rotating the scatterplot below. The origin of the axes is in the middle of the scatterplot because I standardized both variables to have means of 0 and variances of 1. Each point represents the sepal length and petal length measurements of one flower. Rotate the scatterplot so that the data is as spread out as possible on the horizonal axis. In other words, rotate the scatterplot so that the data has maximum variance on the PC1 axis. One way to visualize the problem is to imagine a light source above the plot. How can you rotate the plot so that the points cast the widest possible shadow below the plot? The more the variance on the horizonal axis, the wider the imaginary shadow. 
+Try rotating the scatterplot below. The origin of the axes is in the middle of the scatterplot because I standardized both variables to have means of 0 and variances of 1. Each point represents the sepal length and petal length measurements of one flower. **Rotate the scatterplot so that the data is as spread out as possible on the horizonal axis**. In other words, rotate the scatterplot so that the data has maximum variance on the PC1 axis. 
+
+<details>
+  <summary>Click for Hint</summary>
+  One way to visualize the problem is to imagine a light source above the plot. How can you rotate the plot so that the points cast the widest possible shadow below the plot? The shadow is a projection of the data and the width of the shadow increases as the variance of the data on the horizonal axis increases. 
+  <br>
+  <img src="shadow.png" width="300px" />
+</details>
+<br>
 
 ```{r 2d, echo=FALSE}
 colour = ifelse(iris$Species=="setosa", "black", ifelse(iris$Species=="versicolor","orange", "purple"))
@@ -82,7 +92,7 @@ text3d(3.2,0,0,"Sepal.Length")
 rglwidget(elementId = "plot3drgl")
 ```
 
-Compare your solution to the PCA biplot below. Did you find the same solution? (Your solution could be correct even if it's not the same. Notice that if you rotate the scatter plot 180 degrees (i.e., turn it upsidedown) it will have the same variance on the horizonal axis. Therefore, if your solution is rotated 180 degrees from the PCA then this is an equally valid solution.)
+Compare your solution to the PCA biplot below. Did you find the same solution? (Notice that if you rotate the scatter plot 180 degrees it will have the same variance on the horizonal axis. Therefore, if your solution is rotated 180 degrees from the PCA then this is an equally valid solution.)
 
 ```{r pca 2d, echo=FALSE}
 colour = ifelse(iris$Species=="setosa", "black", ifelse(iris$Species=="versicolor","orange", "purple"))
@@ -114,7 +124,7 @@ text3d(3.2,0,0,"Sepal.Length")
 rglwidget(elementId = "plot3drgl2")
 ```
 
-Did you find the same solution as the PCA biplot, below? (This time, there are four equivalent solutions, since the scatterplot can be rotated 180 degree in two different directions.) If not, try rotating the scatterplot so that it matches the PCA. As a side note, there is also a third axis (principal component) that is not shown in the biplot below. 
+Did you find the same solution as the PCA biplot, below? (This time, there are four equivalent solutions, since the scatterplot can be rotated 180 degree in two different directions.) If not, try rotating the scatterplot so that it matches the PCA. 
 
 ```{r pca 3d, echo=FALSE}
 colour = ifelse(iris$Species=="setosa", "black", ifelse(iris$Species=="versicolor","orange", "purple"))
@@ -131,9 +141,7 @@ legend("topright",legend = unique(iris$Species), fill=unique(colour))
 
 ```
 
-As you can see, the PCA is simply a rotation of the data into a new coordinate system. The new coordinate system is defined by the principal component axes. By looking at the black arrows that represent the original axes, we can see the relationship between the old and new coordinate systems. The principal components are ordered so that each one describes less variance in the data than the previous. As a result, we can focus our analysis on the first few principal components and still capture most of the variation in the data. In other words, we can reduce the dimensions of our data. 
-
-Reducing the number of dimensions is a bit useful when we start with three dimensions, but it becomes more useful when we start with even more dimensions. With more dimensions, the principles are still the same. Like with the 3D scatterplot above, we can still understand the PCA biplot as 2D view of the data from a particular angle in multidimensional space. The only difference is that the multidimensional space has more than three dimensions, which can hurt your brain if you think too much about it!  
+As you can see, the PCA is simply a rotation of the data into a new coordinate system. The new coordinate system is defined by the principal component axes. By looking at the black arrows that represent the original axes, we can see the relationship between the old and new coordinate systems. When we perform a PCA on data with more dimensions, the principles are still the same. Like with the 3D scatterplot above, we can still understand the PCA biplot as 2D view of the data from a particular angle in multidimensional space. The only difference is that the multidimensional space has more than three dimensions, which can hurt your brain if you think too much about it!  
 
 ### How does the math work?
 
@@ -162,9 +170,9 @@ cov_matrix
 ```
 The variance of Sepal.Length and Petal.Length are 1 because I standardized them. The covariance of the two variables is 0.8717538, meaning that they increase together (as we can see in the scatterplot).
 
-As we saw above, PCA defines a new coordinate system for the data and we can understand the change in coordinate system as a rotation of the data. Another way to look at it is that the new variables (principal components) are made up of different combinations of the original variables, called linear combinations. Visually, the relationship between the old and new coordinate system is shown as arrows representing the orientation of the original axes relative to the principal component axes. Mathematically, these arrows represent "eigenvectors", which are a set of numbers that describe the relationship between the old and new coordinate system. The change in coordinate system does not change the number of dimensions, so there are the same number of principal components as there are original variables (in this case, two). 
+As we saw above, PCA defines a new coordinate system for the data and we can understand the change in coordinate system as a rotation of the data. Another way to look at it is that the new variables (principal components) are made up of different combinations of the original variables, called linear combinations. Mathematically, the arrows in a biplot are visualizations of "eigenvectors", which are a set of vectors that describe the relationship between the old and new coordinate systems. The change in coordinate system does not change the number of dimensions, so there are the same number of principal components as there are original variables (in this case, two). 
 
-The new coordinate system and its corresponding eigenvectors are chosen such that the data has maximum possible variance on the first principal component axis. It turns out that the maximum possible variance occurs when the covariance is 0. (Think back to the 2D scatterplot that you rotated above: you may have noticed that the greatest spread in the horizonal axis occured when the data showed no upwards or downwards trend -- in other words, a covariance of 0.) Therefore, the eigenvectors are chosen such that the covariances are 0 in the new coordinate system. This means that all the values in the covariance matrix are 0 except for those on the diagonal, and so we call this a diagonalized matrix.
+The new coordinate system and its corresponding eigenvectors are chosen such that the data has maximum possible variance on the first principal component axis. The maximum possible variance occurs when the covariance is 0. (Think back to the 2D scatterplot that you rotated above: you may have noticed that the greatest spread in the horizonal axis occured when the data showed no upwards or downwards trend -- in other words, a covariance of 0.) Therefore, the eigenvectors are chosen such that the covariances are 0 in the new coordinate system. This means that all the values in the covariance matrix are 0 except for those on the diagonal, and so we call this a diagonalized matrix.
 ```{r cov2, echo=FALSE}
 data.pca <- prcomp(iris[,c(1,3)],scale=T)
 cov_matrix = matrix(nrow=2,ncol=2)
@@ -176,7 +184,7 @@ colnames(cov_matrix) = c("PC1","PC2")
 row.names(cov_matrix) = c("PC1","PC2")
 cov_matrix
 ```
-The numbers on the diagonal are called the "eigenvalues". The eigenvalues are the variances of the data on each principal components axis. We can consider the eigenvalues to be the amount of variance in the data that is explained by each principal component. We name the principal component with the largest eigenvalue, "PC1", the principal component with the second largest eigenvalue, "PC2", and so on (when there are more than two dimensions).  
+The numbers on the diagonal are called "eigenvalues". The eigenvalues are the variances of the data on each principal components axis. We can consider the eigenvalues to be the amount of variance in the data that is explained by each principal component. The principal component with the largest eigenvalue is called "PC1", the principal component with the second largest eigenvalue is called "PC2", and so on (when there are more than two dimensions).  
 
 ### How to do a PCA in R
 
@@ -188,13 +196,13 @@ We set *scale* and *center* to TRUE. This standardizes the variables so that eac
 iris.pca <- prcomp(iris[,1:4],scale=TRUE,center=TRUE)
 ```
 
-We can take a look at a summary of the results using the *summary* function. 
+We can look at a summary of the results using the *summary* function. 
 
 ```{r pca summary}
 summary(iris.pca)
 ```
 
-Notice that there are four principal components because there are four original variables. Each component explains a percentage of the variance in the data. These percentages were calculated from the eigenvalues. PC1 explains 73%, PC2 explains 22.9%, etc. Together, PC1 and PC2 explain almost all the variance in the data (95.8%). The standard deviations of the principal components are the square-roots of the eigenvalues.
+Notice that there are four principal components because there are four original variables. Each component explains a percentage of the variance in the data, calculated from the eigenvalues. PC1 explains 73%, PC2 explains 22.9%, etc. Together, PC1 and PC2 explain almost all the variance in the data (95.8%). The standard deviations of the principal components are the square-roots of the eigenvalues.
 
 **Test your understanding:** What percent of the variance in the data is explained by PC3?
 
@@ -219,7 +227,7 @@ If we run the *plot* function on the PCA output, we generate something called a 
 plot(iris.pca,type="lines")
 ```
 
-For the iris data, the elbow is at the 2nd or 3rd principal component (the location of the elbow is open to interpretation). Therefore, we might discard principal component 4 (and maybe 3 as well). We already know from the *summary* function that PC1 and PC2 together explain 95.8% of the variation in the data, and P1, P2, and PC3 together explain 99.5% of the variation. The final principal component only explains an additional 0.5%.      
+For the iris data, the elbow is at the 2nd or 3rd principal component (the location of the elbow is subjective). Therefore, we might discard principal component 4 (and maybe 3 as well). We already know from the *summary* function that PC1 and PC2 together explain 95.8% of the variation in the data, and P1, P2, and PC3 together explain 99.5% of the variation. The final principal component only explains an additional 0.5%.      
 
 The built-in function for displaying PCA results is called *biplot*. The biplots this function creates are not very visually-pleasing. The rowname of each individual is used as a label. 
 
@@ -227,7 +235,7 @@ The built-in function for displaying PCA results is called *biplot*. The biplots
 biplot(iris.pca)
 ```
 
-We will make our own biplot using the *plot* function that is more customizable and easier to read. We can start by plotting the PC1 and PC2 values of each iris individual as a point. These values are stored, respectively, in the first and second column of iris.pca$x.
+We will make our own biplot using the *plot* function. We can start by plotting the PC1 and PC2 values of each iris individual as a point. These values are stored, respectively, in the first and second column of iris.pca$x.
 
 **Test your understanding:** What does it mean if two points are far from each other on the biplot? What does it mean if two points are close together?
 
@@ -256,7 +264,7 @@ plot(iris.pca$x[,1],iris.pca$x[,2],pch=19,xlab="PC1",ylab="PC2",asp=1,col=iris$S
 legend("topright",legend = unique(iris$Species), col=1:3, pch=19)
 ```
 
-Let's change the default colours. Red and green are difficult for many people with colourblindness to distinguish. Purple and yellow are more colourblindness-friendly choices. To customize the colour palette, we create a variable called "colour". 
+Let's change the default colours. Red and green are difficult for many people with colourblindness to distinguish. Purple and yellow are a better choice. To customize the colour palette, we create a variable called "colour". 
 
 ```{r nicer plot colours}
 colour = ifelse(iris$Species=="setosa", "black", ifelse(iris$Species=="versicolor","orange", "purple"))
@@ -275,7 +283,7 @@ legend("topright",legend = unique(iris$Species), col=unique(colour), pch=19)
 </details>
 <br>
 
-Next, we'll add arrows and text to visualize the eigenvectors. This will show how the axes of the original variables are oriented relative to the principal components. As we saw in the introduction, we can think of these arrows as being a view of the of original data from a particular angle in multidimensional space. We obtain the eigenvector values from the "Rotation" table.
+Next, we'll add arrows and text to visualize the eigenvectors. We obtain the eigenvector values from the "Rotation" table.
 
 ```{r nicer plot arrows and text}
 colour = ifelse(iris$Species=="setosa", "black", ifelse(iris$Species=="versicolor","orange", "purple"))
@@ -285,7 +293,7 @@ text(x=iris.pca$rotation[,1],y=iris.pca$rotation[,2],colnames(iris[,1:4]))
 legend("topright",legend = unique(iris$Species), col=unique(colour), pch=19)
 ```
 
-The labels and arrows are crowded together and difficult to read, so we can extend them by multiplying the rotation values by some number (I found that 3 looks nice). The angle between the arrows and their relative length are the important things; we can change the absolute length of the arrows without affecting our interpretation of the biplot.    
+The labels and arrows are crowded together and difficult to read, so we can extend them by multiplying the rotation values by some number (I found that 3 looks pretty good). The angle between the arrows and their relative length are the important things; we can change the absolute length of the arrows without affecting our interpretation of the biplot.    
 
 ```{r nicer plot longer arrows}
 colour = ifelse(iris$Species=="setosa", "black", ifelse(iris$Species=="versicolor","orange", "purple"))
@@ -301,7 +309,7 @@ legend("topright",legend = unique(iris$Species), col=unique(colour), pch=19)
   <summary>Click for Answer</summary>
   Petal.Length and Petal.Width have similar arrows because the PCA has oriented them almost the same relative to the PCA axes. This is because being able to see both variables at the same time doesn't add much extra information. In other words, Petal.Length and Petal.Width provide redundant information because their covariance is high. If you scroll up to the "Iris case study" section, you can see the strong correlation in the Petal.Length-Petal.Width scatterplots.
   
-  Similarly, Sepal.Length is pointing perpendicularly to the other arrows because it isn't correlated strongly with the other variables. Notice also that the Sepal.Length arrow is longer than the other variables. This means that Sepal.Length explains a lot of the variance in the data and so it contributes strongly to the principal components (especially PC2). To think of it more visually, the data is spread out widely on the Sepal.Length axis so the PCA orients this axis so that we can see the spread. 
+  Similarly, Sepal.Length is pointing perpendicularly to the other arrows because it isn't correlated strongly with the other variables. Notice also that the Sepal.Length arrow is longer than the other variables. This means that Sepal.Length explains a lot of the variance in the data and so it contributes strongly to the principal components (especially PC2). To think of it more visually, the data is spread out widely and in a unique way on the Sepal.Length axis so the PCA orients this axis so that we can see the spread. 
   
   If two variables were negatively correlated, then their arrows would point in opposite directions on the biplot.
   
@@ -317,6 +325,7 @@ legend("topright",legend = unique(iris$Species), col=unique(colour), pch=19)
 ```{r aggregate}
 aggregate(. ~ Species, data = iris, mean)
 ```
+  How does flower morphology differ among *Iris setosa* individuals?
   
 </details>
 <br>
@@ -336,8 +345,6 @@ aggregate(. ~ Species, data = iris, mean)
 
 ## Assignment
 
-This assignment has two parts. In the first part, you will answer comprehension questions about a PCA reported in a peer-reviewed study. The way that the authors report their PCA will act as a guide for you in the second part. In the second part of the assignment, you will perform and report your own PCA using a dataset collected by the class. 
-
 As with previous tutorial assignments, please hand in your assignment as a pdf document created using RMarkdown. For any code, set echo=TRUE so that it is visible. Submit your document in the "PCA tutorial" folder in Moodle.
 
 
@@ -349,7 +356,7 @@ Garnier, E., Cortez, J., Billès, G., Navas, M. L., Roumet, C., Debussche, M., .
 
 1. The authors state that they performed the PCA on standardized data. Why was it important for them to mention that the data was standardized?
 
-2. In Figure 2, the authors present a much simpler graph than the one I made in this tutorial. They chose not to include the data points or arrows. Instead, they only include labels that indicate the eigenvectors. If they had included the data points, how many would there be and why? Why do you think the authors decided to make their graph the way they did? Do you think it was a good decision, or would you make the graph differently?
+2. In Figure 2, the authors present a much simpler graph than the one I made in this tutorial. Why do you think the authors decided to make their figure the way they did? Do you think it was a good decision, or would you make the figure differently? Justify your answer. The authors didn't plot data points, but if they did, how many points would there be and why? 
 
 3. The following information should be included when reporting a PCA. Quote from the paper to show how the authors communicated each piece of information:
 
@@ -363,28 +370,28 @@ Garnier, E., Cortez, J., Billès, G., Navas, M. L., Roumet, C., Debussche, M., .
 
 Before the tutorial, you were asked to complete a [survey](https://forms.gle/CbbTexyC7rMu1PVVA). This survey involved completing six short tasks on the website https://www.humanbenchmark.com/. The data collected from the survey is available [here](https://docs.google.com/spreadsheets/d/1AD2fgIpdxp2Bj71GOKs12U8QvUHzCYSqYqyYFvKVXxA/edit?usp=sharing). Download the data from the Google Spreadsheet as a csv file by going to File > Download > Comma-separated values. Open the downloaded file in Excel and rename the columns with short names that don't contain spaces (e.g., change "Can you play a musical instrument?" to "musician"). If any of the values are blank or nonsensical, replace them with "NA".
 
-Load the data in R and explore the data using functions like *summary*, *aggregate*, and *plot*. You don't need to include this exploration in your report, but it will help you to understand the PCA. Choose the demographic variable that you think will have the greatest effect on task performance and predict its effect. (The "demographic variables" are the ones about gender, and whether the student is a musician, athlete, or gamer.) Perform a PCA on the six task performance variables. Make a biplot of the PCA and colour the points by your chosen demographic variables. Report the results and discuss what they mean. 
+Predict how the task performance variables will correlate with each other. Choose the demographic variable that you think will have the greatest effect on task performance and predict its effect. (The "demographic variables" are the ones about gender, and whether the student is a musician, athlete, or gamer.) Load the data in R and explore the data using functions like *summary*, *aggregate*, and *plot*. You don't need to include this exploration in your report, but it will help you to understand the PCA. Perform a PCA on the six task performance variables. Make a biplot of the PCA and colour the points by your chosen demographic variables. Report the results and discuss what they mean. 
 
 **To include in your report: ** 
 
-1. Predictions: Your predictions of the effect of the demographic variable on task performance. Make specific predictions that can be evaluated with a PCA. Explain the reasoning behind your predictions. (You should make these predictions before looking at the data.) 
+1. Predictions: Make specific predictions about the data that can be evaluated with a PCA. Explain the reasoning behind your predictions. (You should make these predictions before looking at the data.) 
   
-2. Methods: A paragraph describing the methods used to gather the data and perform the PCA. Use the paper from Part I as a guide for how to describe the PCA methods.
+2. Methods: A paragraph describing the methods used to gather the data and perform the PCA. Use Part I as a guide for how to describe the PCA methods.
     
 3. Figure: A PCA biplot, coloured by your chosen demographic variable and including a figure caption. Include the R code used to generate the PCA and the plot. 
 
-4. Results: A short paragraph reporting the PCA results. Again, use the paper from Part I as a guide for what to include in the results.
+4. Results: A short paragraph reporting the PCA results. Again, use Part I as a guide for what to include in the results.
     
-5. Discussion: A discussion, in which you interpret the results (300-500 words). Discuss how performance on different tasks correlate to each other and suggest what may cause these correlations. Assess your predictions based on your PCA results. If your predictions were wrong, suggest why this might be. Include any other interesting insights about the data you may have gained from the PCA.
+5. Discussion: Interpret the results (300-500 words). Discuss how performance on different tasks correlate to each other and suggest what may cause these correlations. Assess your predictions based on your PCA results. If your predictions were wrong, suggest why this might be. Include any other interesting insights about the data you may have gained from the PCA.
 
 
 ### Evaluation
 
-For each question, I indicate below the point allocation and the criteria that will be evaluated. The performance descriptions for each criterion are given in the rubric.
+For each question, I indicate below the criteria that will be evaluated and the point allocation. The performance descriptions for each criterion are given in the rubric.
 
 Part I:
 
-1. Accuracy, critical thinking, communication; 1 pt 
+1. Accuracy, communication; 1 pt 
 
 2. Accuracy, critical thinking, communication; 1 pt
 
@@ -401,6 +408,7 @@ Part II:
 4. Statistical reporting, accuracy, communication; 2 pts
     
 5. Accuracy, critical thinking, communication; 2 pts
+
 
 Total = 13 pts
 

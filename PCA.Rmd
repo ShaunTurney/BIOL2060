@@ -219,7 +219,7 @@ Using the function, *structure*, we can look at more information about the PCA.
 structure(iris.pca)
 ```
 
-The "Rotation" table columns give the eigenvectors for each of the original variables. As we saw above, the eigenvectors are visualized in biplots as arrows and they describe how the axes of the original variables are oriented relative to the principal component axes.
+The "Rotation" table columns give the eigenvectors for each of the principal components. As we saw above, the eigenvectors are visualized in biplots as arrows and they describe how the axes of the original variables are oriented relative to the principal component axes.
 
 If we run the *plot* function on the PCA output, we generate something called a "screeplot". A screeplot shows how much variance is explained by each principal component (i.e., the eigenvalues). A screeplot usually drops steeply at first, and then bends at an "elbow" and the curve flattens out. If we want to reduce the dimensions of our data, we can use the elbow as a cutoff. We discard the components to the right of the elbow because they explain very little of the variation in the data. 
 

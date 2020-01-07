@@ -361,21 +361,21 @@ Garnier, E., Cortez, J., Billès, G., Navas, M. L., Roumet, C., Debussche, M., .
 
 ### Part II: Student data
 
-1. Before the tutorial, you were asked to complete a [survey](https://forms.gle/CbbTexyC7rMu1PVVA). This survey involved completing six short tasks on the website https://www.humanbenchmark.com/. The data collected from the survey is available [here](https://docs.google.com/spreadsheets/d/1AD2fgIpdxp2Bj71GOKs12U8QvUHzCYSqYqyYFvKVXxA/edit?usp=sharing). Download the data from the Google Spreadsheet as a csv file by going to File > Download > Comma-separated values. Open the downloaded file in Excel and rename the columns with short names that don't contain spaces (e.g., change "Can you play a musical instrument?" to "musician"). If any of the values are blank or nonsensical, replace them with "NA".
+Before the tutorial, you were asked to complete a [survey](https://forms.gle/CbbTexyC7rMu1PVVA). This survey involved completing six short tasks on the website https://www.humanbenchmark.com/. The data collected from the survey is available [here](https://docs.google.com/spreadsheets/d/1AD2fgIpdxp2Bj71GOKs12U8QvUHzCYSqYqyYFvKVXxA/edit?usp=sharing). Download the data from the Google Spreadsheet as a csv file by going to File > Download > Comma-separated values. Open the downloaded file in Excel and rename the columns with short names that don't contain spaces (e.g., change "Can you play a musical instrument?" to "musician"). If any of the values are blank or nonsensical, replace them with "NA".
 
-2. Load the data in R and explore the data using functions like *summary*, *aggregate*, and *plot*. You don't need to include this exploration in your report, but it will help you to understand the PCA. Choose the demographic variable that you think will have the greatest effect on task performance and predict its effect. (The "demographic variables" are the ones about gender, and whether the student is a musician, athlete, or gamer.) Perform a PCA on the six task performance variables. Make a biplot of the PCA and colour the points by your chosen demographic variables. **To include in your report: ** 
+Load the data in R and explore the data using functions like *summary*, *aggregate*, and *plot*. You don't need to include this exploration in your report, but it will help you to understand the PCA. Choose the demographic variable that you think will have the greatest effect on task performance and predict its effect. (The "demographic variables" are the ones about gender, and whether the student is a musician, athlete, or gamer.) Perform a PCA on the six task performance variables. Make a biplot of the PCA and colour the points by your chosen demographic variables. Report the results and discuss what they mean. 
 
-    (a) Predictions: Your predictions of the effect of the demographic variable on task performance. Make specific predictions that can be evaluated with a PCA. Explain the reasoning behind your predictions. (You should make these predictions before looking at the data.) 
+**To include in your report: ** 
+
+1. Predictions: Your predictions of the effect of the demographic variable on task performance. Make specific predictions that can be evaluated with a PCA. Explain the reasoning behind your predictions. (You should make these predictions before looking at the data.) 
   
-    (b) Methods: A paragraph describing the methods used to gather the data and perform the PCA. Use the paper from Part I as a guide for how to describe the PCA methods.
+2. Methods: A paragraph describing the methods used to gather the data and perform the PCA. Use the paper from Part I as a guide for how to describe the PCA methods.
     
-    (c) Figure: A PCA biplot, coloured by your chosen demographic variable and including a figure caption. Include the R code used to generate the PCA and the plot. 
+3. Figure: A PCA biplot, coloured by your chosen demographic variable and including a figure caption. Include the R code used to generate the PCA and the plot. 
 
-3. Report the results and discuss what they mean. **To include in your report: ** 
-
-    (d) Results: A short paragraph reporting the PCA results. Again, use the paper from Part I as a guide for what to include in the results.
+4. Results: A short paragraph reporting the PCA results. Again, use the paper from Part I as a guide for what to include in the results.
     
-    (e) Discussion: A discussion, in which you interpret the results (300-500 words). Discuss how performance on different tasks correlate to each other and suggest what may cause these correlations. Assess your predictions based on your PCA results. If your predictions were wrong, suggest why this might be. Include any other interesting insights about the data you may have gained from the PCA.
+5. Discussion: A discussion, in which you interpret the results (300-500 words). Discuss how performance on different tasks correlate to each other and suggest what may cause these correlations. Assess your predictions based on your PCA results. If your predictions were wrong, suggest why this might be. Include any other interesting insights about the data you may have gained from the PCA.
 
 
 ### Evaluation
@@ -384,32 +384,28 @@ For each question, I indicate below the point allocation and the criteria that w
 
 Part I:
 
-1. 1 pt; Accuracy, critical thinking, communication 
+1. Accuracy, critical thinking, communication; 1 pt 
 
-2. 1 pt; Accuracy, critical thinking, communication 
+2. Accuracy, critical thinking, communication; 1 pt
 
-3. 0.25 pts each x 4 = 1 pt; Accuracy
+3. Accuracy; 0.25 pts each x 4 = 1 pt
 
 Part II:
 
-2. 
-
-    (a) 2 pts; Critical thinking, communication.
+1. Critical thinking, communication; 2 pts
     
-    (b) 2 pts; Statistical approach, communication.
+2. Statistical approach, communication; 2 pts
     
-    (c) 2 pts; Visuals, statistical reporting.
+3. Visuals, statistical reporting; 2 pts
 
-3. 
-
-    (d) 2 pts; Statistical reporting, accuracy, communication.
+4. Statistical reporting, accuracy, communication; 2 pts
     
-    (e) 2 pts; Accuracy, critical thinking, communication.
+5. Accuracy, critical thinking, communication; 2 pts
 
 Total = 13 pts
 
 Rubric
-<br><br>
+<br>
 <img src="rubric.png" width="600px" />
 
 

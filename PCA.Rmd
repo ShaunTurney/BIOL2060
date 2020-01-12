@@ -385,7 +385,7 @@ Predict how the task performance variables will correlate with each other. Choos
 
 ### Evaluation
 
-For each question, I indicate below the criteria that will be evaluated and the point allocation. The performance descriptions for the criteria are given in the statistcal literacy rubric in the course outline. (The course outline is available <a href="Course plan.docx" download>here</a>)
+For each question, I indicate below the criteria that will be evaluated and the point allocation. The performance descriptions for the criteria are given in the statistcal literacy rubric in the course outline. (The course outline is available as a pdf <a href="Course_plan.pdf" download>here.</a>)
 
 Part I:
 

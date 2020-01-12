@@ -356,7 +356,9 @@ Garnier, E., Cortez, J., Billès, G., Navas, M. L., Roumet, C., Debussche, M., .
 
 2. In Figure 2, the authors present a much simpler graph than the one I made in this tutorial. Why do you think the authors decided to make their figure the way they did? Do you think it was a good decision, or would you make the figure differently? Justify your answer. The authors didn't plot data points, but if they did, how many points would there be and why? 
 
-3. The following information should be included when reporting a PCA. Quote from the paper to show how the authors communicated each piece of information:
+3. Based on Figure 2, how did the vinyards change as time passed since their abdonment? In your own words, how do the authors explain these changes ecologically? 
+
+4. The following information should be included when reporting a PCA. Quote from the paper to show how the authors communicated each piece of information:
 
     (a) The reason(s) for doing a PCA.
     (b) How the PCA was performed (standardization, software used, etc.). 
@@ -393,7 +395,9 @@ Part I:
 
 2. Interpretation, communication; 1 pt
 
-3. Accuracy (i.e., did the student choose the correct quotes); 0.25 pts each x 4 = 1 pt
+3. Interpretation, communication; 1 pt
+
+4. Accuracy (i.e., did the student choose the correct quotes); 0.25 pts each x 4 = 1 pt
 
 Part II:
 
@@ -408,7 +412,7 @@ Part II:
 5. Application/analysis, communication; 2 pts
 
 
-Total = 13 pts
+Total = 14 pts
 
 
 

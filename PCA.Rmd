@@ -385,35 +385,30 @@ Predict how the task performance variables will correlate with each other. Choos
 
 ### Evaluation
 
-For each question, I indicate below the criteria that will be evaluated and the point allocation. The performance descriptions for each criterion are given in the rubric.
+For each question, I indicate below the criteria that will be evaluated and the point allocation. The performance descriptions for the criteria are given in the statistcal literacy rubric in the course outline. (The course outline is available <a href="Course plan.docx" download>here</a>)
 
 Part I:
 
-1. Accuracy, communication; 1 pt 
+1. Interpretation, communication; 1 pt 
 
-2. Accuracy, critical thinking, communication; 1 pt
+2. Interpretation, communication; 1 pt
 
-3. Accuracy; 0.25 pts each x 4 = 1 pt
+3. Accuracy (i.e., did the student choose the correct quotes); 0.25 pts each x 4 = 1 pt
 
 Part II:
 
-1. Critical thinking, communication; 2 pts
+1. Communication; 2 pts
     
-2. Statistical approach, communication; 2 pts
+2. Communication; 2 pts
     
-3. Visuals, statistical reporting; 2 pts
+3. Calculation, representation; 2 pts
 
-4. Statistical reporting, accuracy, communication; 2 pts
+4. Interpretation, communication; 2 pts
     
-5. Accuracy, critical thinking, communication; 2 pts
+5. Application/analysis, communication; 2 pts
 
 
 Total = 13 pts
-
-Rubric
-<br>
-<img src="rubric.png" width="600px" />
-
 
 
 

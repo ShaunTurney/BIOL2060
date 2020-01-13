@@ -217,7 +217,7 @@ Notice that there are four principal components because there were four original
 </details>
 <br>
 
-If we want to reduce the dimensions of our data, we should discard the principal components after some cutoff. There are various approaches for choosing a cutoff, but that's beyond the scope of this tutorial. Generally, you should choose a number of dimensions that capture the large majority of the variation in your data. For instance, we might discard principal component 4 (and maybe 3 as well). PC1 and PC2 together explain 95.8% of the variation in the data, and P1, P2, and PC3 together explain 99.5% of the variation. The final principal component only explains an additional 0.5%. If we discard PC3 and PC4, we reduce the dimensions of our data while losing very little of the variation in the data. 
+If we want to reduce the dimensions of our data, we should discard the principal components after some cutoff. There are various approaches for choosing a cutoff, but that's beyond the scope of this tutorial. Generally, you should enough dimensions to capture the large majority of the variance in your data. For instance, we might discard principal component 4 (and maybe 3 as well). PC1 and PC2 together explain 95.8% of the total variance in the data, and P1, P2, and PC3 together explain 99.5% of the total variance. The final principal component only explains an additional 0.5%. If we discard PC3 and PC4, we reduce the dimensions of our data while losing very little of the variance in the data. 
 
 Using the function, *structure*, we can look at more information about the PCA. 
 
